@@ -42,4 +42,6 @@ __prompt_command() {
     else
       PS1="${PS1}${col_l_green}\$${col_rst} "
     fi
+
+    echo -en "\033]0;${USER}@${HOSTNAME} $(pwd)'\a"
 }
