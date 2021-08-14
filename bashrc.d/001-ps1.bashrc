@@ -3,7 +3,7 @@ PROMPT_COMMAND=__prompt_command
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
 
-    PS1="[${col_l_blue}\u${col_rst}@\h ${col_l_gray}\W${col_rst}"
+    PS1="[${col_l_blue}\u${col_rst}@\h ${col_l_purple}\W${col_rst}"
 
     if [[ -d ".git" ]]; then
       PS1+="(${col_l_cyan}$(git rev-parse --abbrev-ref HEAD)${col_rst})"
