@@ -10,7 +10,7 @@ __prompt_command() {
       if [[ "${_br}" == "main" || "${_br}" == "master" ]]; then
         PS1+="(${col_l_purple}${_br}${col_rst})"
       else
-        PS1+="(${col_l_green}${_br}${col_rst})"
+        PS1+="(${col_l_blue}${_br}${col_rst})"
       fi
     fi
     PS1+="]"
