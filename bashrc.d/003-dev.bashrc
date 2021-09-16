@@ -14,7 +14,7 @@ _dev()
 
 function dev()
 {
-  cd ~/dev/${1}
+  cd ${DEV_ROOT}/${1}
 }
 
 complete -F _dev dev
