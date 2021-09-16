@@ -3,10 +3,15 @@ PROMPT_COMMAND=__prompt_command
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
 
-    PS1="[${col_l_blue}\u${col_rst}@\h ${col_l_purple}\W${col_rst}"
+    PS1="[${col_l_blue}\u${col_rst}@${col_l_blue}\h${col_rst} ${col_l_grey}\W${col_rst}"
 
     if [[ -d ".git" ]]; then
-      PS1+="(${col_l_cyan}$(git rev-parse --abbrev-ref HEAD)${col_rst})"
+      local _br="$(git rev-parse --abbrev-ref HEAD)"
+      if [[ "${_br}" == "main" || "${_br}" == "master" ]]; then
+        PS1+="(${col_l_purple}${_br}${col_rst})"
+      else
+        PS1+="(${col_l_green}${_br}${col_rst})"
+      fi
     fi
     PS1+="]"
 
@@ -17,7 +22,7 @@ __prompt_command() {
       local _stg=$(git diff --name-only --cached | wc -l)
       local _unp=$(git log --branches --not --remotes --oneline | wc -l)
 
-      PS1+="${col_l_red}"
+      PS1+="${col_l_purple}"
       if (( _mod > 0 )); then
         PS1+=" ❱${_mod}"
       fi
@@ -34,7 +39,7 @@ __prompt_command() {
         PS1+=" ⇪${_unp}"
       fi
 
-      PS1+="${col_rst}"
+      PS1+="${col_rst} "
     fi
 
     if [[ "${_last_exit_code}" != "0" ]]; then
