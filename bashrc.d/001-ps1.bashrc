@@ -1,4 +1,12 @@
-PROMPT_COMMAND=__prompt_command
+# ==========================================================================
+# Add nice colors and command exec time into bash
+# ==========================================================================
+[ -e "/etc/DIR_COLORS" ] && DIR_COLORS="/etc/DIR_COLORS"
+[ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
+[ -e "$DIR_COLORS" ] || DIR_COLORS=""
+eval "`dircolors -b $DIR_COLORS`"
+
+export PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
@@ -48,5 +56,10 @@ __prompt_command() {
       PS1="${PS1}${col_l_green}\$${col_rst} "
     fi
 
-    echo -en "\033]0;${USER}@${HOSTNAME} $(pwd)'\a"
+    echo -en "\033]0;${USER}@${HOSTNAME} $(pwd)'\007"
 }
+
+# Ensure window size is checked for word wrapping
+if [[ "$(get_shell 2> /dev/null)" = "bash" ]]; then
+  shopt -s checkwinsize
+fi

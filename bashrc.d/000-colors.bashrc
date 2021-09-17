@@ -1,4 +1,12 @@
+fmt_bold=$(printf '\033[1m')
+fmt_dim=$(printf '\033[2m')
+fmt_und=$(printf '\033[4m')
+fmt_rvs=$(printf '\033[7m')
+fmt_hid=$(printf '\033[8m')
+fmt_bu=$(printf '\033[1m\033[4m')
+
 col_rst=$(echo -en '\033[0m')
+
 col_red=$(echo -en '\033[00;31m')
 col_green=$(echo -en '\033[00;32m')
 col_yellow=$(echo -en '\033[00;33m')
