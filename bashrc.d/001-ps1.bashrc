@@ -11,14 +11,14 @@ export PROMPT_COMMAND=__prompt_command
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
 
-    PS1="[${col_l_blue}\u${col_rst}@${col_l_blue}\h${col_rst} ${col_l_grey}\W${col_rst}"
-
+    PS1='\[\e[34m\][%s] \[\e[0m\]$ '
+    PS1='\[\e[34m\]\u\[\e[0m\]@\[\e[34m\]\h\[\e[37m\]\[\e[2m\] \W\[\e[0m\]'
     if [[ -d ".git" ]]; then
       local _br="$(git rev-parse --abbrev-ref HEAD)"
       if [[ "${_br}" == "main" || "${_br}" == "master" ]]; then
-        PS1+="(${col_l_purple}${_br}${col_rst})"
+        PS1+="(\[\e[35m\]${_br}\[\e[0m\])"
       else
-        PS1+="(${col_l_blue}${_br}${col_rst})"
+        PS1+="(\[\e[34m\]${_br}\[\e[0m\])"
       fi
     fi
     PS1+="]"
@@ -30,7 +30,7 @@ __prompt_command() {
       local _stg=$(git diff --name-only --cached | wc -l)
       local _unp=$(git log --branches --not --remotes --oneline | wc -l)
 
-      PS1+="${col_l_purple}"
+      PS1+="\[\e[35m\]"
       if (( _mod > 0 )); then
         PS1+=" ❱${_mod}"
       fi
@@ -47,13 +47,13 @@ __prompt_command() {
         PS1+=" ⇪${_unp}"
       fi
 
-      PS1+="${col_rst} "
+      PS1+="\[\e[0m\] "
     fi
 
     if [[ "${_last_exit_code}" != "0" ]]; then
-      PS1="${PS1}${col_l_red}\$${col_rst} "
+      PS1="${PS1}\[\e[31m\]\$\[\e[0m\] "
     else
-      PS1="${PS1}${col_l_green}\$${col_rst} "
+      PS1="${PS1}\[\e[32m\]\$\[\e[0m\] "
     fi
 
     echo -en "\033]0;${USER}@${HOSTNAME} $(pwd)'\007"
