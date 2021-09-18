@@ -10,4 +10,5 @@ function qtc_config()
   echo '#define Q_INVOKABLE'
   echo '#define QT_END_NAMESPACE'
   echo '#define Q_PRIVATE_SLOT(...)'
+  echo '#define Q_ENUM(...)'
 }
