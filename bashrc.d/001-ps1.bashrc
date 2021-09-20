@@ -11,7 +11,7 @@ export PROMPT_COMMAND=__prompt_command
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
 
-    PS1='[\[\e[36m\]\u\[\e[0m\]@\[\e[2m\]\e[37m\]\h\[\e[37m\]\[\e[2m\] \W\[\e[0m\]'
+    PS1='[\[\e[36m\]\u\[\e[0m\]@\[\e[37m\]\h\[\e[37m\]\[\e[2m\] \W\[\e[0m\]'
     if [[ -d ".git" ]]; then
       local _br="$(git rev-parse --abbrev-ref HEAD)"
       if [[ "${_br}" == "main" || "${_br}" == "master" ]]; then
