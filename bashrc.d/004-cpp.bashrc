@@ -15,7 +15,7 @@ function cmake_debug()
 
 function cmake_release()
 {
-  __cmake Debug $@
+  __cmake Release $@
 }
 
 function make()
