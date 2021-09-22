@@ -53,3 +53,18 @@ function v210_size()
   local stride_sz=$(v210_stride ${width})
   echo $((stride_sz * height))
 }
+
+# vooya helper for v210 streams
+function vooya_v210()
+{
+  local _w=${1}
+  shift
+  local _h=${2}
+  shift
+
+  if [[ "${_w}" == "" || "${_h}" == "" ]]; then
+    echo 'usage: vooya_v210 <width> <height> <file>'
+  fi
+
+  vooya --width ${_w} --height ${h} --color yuv --packing v210 --bits 10 "${@}"
+}
