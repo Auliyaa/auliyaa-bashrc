@@ -59,12 +59,12 @@ function vooya_v210()
 {
   local _w=${1}
   shift
-  local _h=${2}
+  local _h=${1}
   shift
 
   if [[ "${_w}" == "" || "${_h}" == "" ]]; then
     echo 'usage: vooya_v210 <width> <height> <file>'
   fi
 
-  vooya --width ${_w} --height ${h} --color yuv --packing v210 --bits 10 "${@}"
+  vooya --width ${_w} --height ${_h} --color yuv --packing v210 --bits 10 "${@}"
 }
