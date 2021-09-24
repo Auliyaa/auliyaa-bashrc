@@ -5,7 +5,12 @@ function __cmake()
 {
   local _bm=${1}
   shift
-  /usr/bin/cmake -DCMAKE_BUILD_TYPE=${_bm} $@
+  /usr/bin/cmake \
+   -DCMAKE_C_COMPILER=/usr/bin/clang\
+   -DCMAKE_CXX_COMPILER=/usr/bin/clang++\
+   -DCMAKE_BUILD_TYPE=${_bm}\
+   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\
+   $@
 }
 
 function cmake_debug()
@@ -15,7 +20,7 @@ function cmake_debug()
 
 function cmake_release()
 {
-  __cmake Debug $@
+  __cmake Release $@
 }
 
 function make()
@@ -35,3 +40,8 @@ function make()
 {
   /usr/bin/make -j$((corecount*2/3)) "${@}"
 }
+
+# ==========================================================================
+# use verbose output for ctest
+# ==========================================================================
+export CTEST_OUTPUT_ON_FAILURE=1
