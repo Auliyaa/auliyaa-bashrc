@@ -66,5 +66,5 @@ function vooya_v210()
     echo 'usage: vooya_v210 <width> <height> <file>'
   fi
 
-  vooya --width ${_w} --height ${_h} --color yuv --packing v210 --bits 10 "${@}"
+  /opt/vooya/vooya --width ${_w} --height ${_h} --color yuv --packing v210 --bits 10 "${@}"
 }
