@@ -6,8 +6,8 @@ function __cmake()
   local _bm=${1}
   shift
   /usr/bin/cmake \
-   -DCMAKE_C_COMPILER=/usr/bin/clang\
-   -DCMAKE_CXX_COMPILER=/usr/bin/clang++\
+   -DCMAKE_C_COMPILER=/usr/bin/gcc\
+   -DCMAKE_CXX_COMPILER=/usr/bin/g++\
    -DCMAKE_BUILD_TYPE=${_bm}\
    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\
    $@

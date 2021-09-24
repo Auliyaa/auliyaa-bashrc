@@ -26,8 +26,15 @@ _deckey()
 }
 
 complete -F _deckey deckey
+complete -F _deckey pkey
 
 function deckey()
+{
+  cat "${HOME}/keys/${1}" | decrypt | xclip -selection c
+  echo "copied to clipboard"
+}
+
+function pkey()
 {
   cat "${HOME}/keys/${1}" | decrypt
 }
