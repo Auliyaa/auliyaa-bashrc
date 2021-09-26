@@ -14,6 +14,19 @@ function _os_tips_topic_pwmconfig()
   echo 'source: https://askubuntu.com/questions/1145968/how-to-see-all-my-fans-in-sensors'
 }
 
+function _os_tips_topic_laserweb()
+{
+  echo '== install docker =='
+  echo 'yay -S docker'
+  echo 'sudo gpasswd -a auliyaa docker # required to run docker commands as user'
+  echo '== install laserweb4 =='
+  echo 'cd LaserWeb4 # folder where laserweb sources are cloned'
+  echo 'docker build -t laserweb4 .'
+  echo 'sudo systemctl start docker # maybe enable'
+  echo '== run laserweb =='
+  echo 'laserweb4 # local macros from 201-diy.bashrc'
+}
+
 _os_tips()
 {
     COMPREPLY=()
