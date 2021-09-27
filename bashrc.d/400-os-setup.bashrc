@@ -6,6 +6,7 @@ function _os_setup_topic_git()
   git config --global alias.st status
   git config --global user.name "Ludwig Fiolka"
   git config --global user.email urushiraa@gmail.com
+  git config --global credential.helper store
 
   touch ~/.gitignore_global
   (echo 'build.debug'
