@@ -6,6 +6,19 @@ function _os_setup_topic_git()
   git config --global alias.st status
   git config --global user.name "Ludwig Fiolka"
   git config --global user.email urushiraa@gmail.com
+
+  touch ~/.gitignore_global
+  (echo 'build.debug'
+  echo 'build.release'
+  echo 'install.debug'
+  echo 'install.release'
+  echo '*.creator'
+  echo '*.files'
+  echo '*.config'
+  echo '*.cflags'
+  echo '*.cxxflags'
+  echo '*.includes') >> ~/.gitignore_global
+  git config --global core.excludesfile ~/.gitignore_global
 }
 
 function _os_setup_topic_yay()
