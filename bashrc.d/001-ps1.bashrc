@@ -10,8 +10,10 @@ export PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
     local _last_exit_code="$?" # This needs to be first
+    timer_stop # stop timer
 
-    PS1='[\[\e[36m\]\u\[\e[0m\]@\[\e[37m\]\h\[\e[37m\]\[\e[2m\] \W\[\e[0m\]'
+    PS1="\[\e[2m\]+${timer_show}\[\e[0m\] "
+    PS1+='[\[\e[36m\]\u\[\e[0m\]@\[\e[37m\]\h\[\e[37m\]\[\e[2m\] \W\[\e[0m\]'
     if [[ -d ".git" ]]; then
       local _br="$(git rev-parse --abbrev-ref HEAD)"
       if [[ "${_br}" == "main" || "${_br}" == "master" ]]; then
@@ -62,3 +64,32 @@ __prompt_command() {
 if [[ "$(get_shell 2> /dev/null)" = "bash" ]]; then
   shopt -s checkwinsize
 fi
+
+# see https://stackoverflow.com/questions/1862510/how-can-the-last-commands-wall-time-be-put-in-the-bash-prompt
+function timer_now {
+    date +%s%N
+}
+
+function timer_start {
+    timer_start=${timer_start:-$(timer_now)}
+}
+
+function timer_stop {
+    local delta_us=$((($(timer_now) - $timer_start) / 1000))
+    local us=$((delta_us % 1000))
+    local ms=$(((delta_us / 1000) % 1000))
+    local s=$(((delta_us / 1000000) % 60))
+    local m=$(((delta_us / 60000000) % 60))
+    local h=$((delta_us / 3600000000))
+    # Goal: always show around 3 digits of accuracy
+    if ((h > 0)); then timer_show=${h}h${m}m
+    elif ((m > 0)); then timer_show=${m}m${s}s
+    elif ((s >= 10)); then timer_show=${s}.$((ms / 100))s
+    elif ((s > 0)); then timer_show=${s}.$(printf %03d $ms)s
+    elif ((ms >= 100)); then timer_show=${ms}ms
+    elif ((ms > 0)); then timer_show=${ms}.$((us / 100))ms
+    else timer_show=${us}us
+    fi
+    unset timer_start
+}
+trap 'timer_start' DEBUG
