@@ -1,4 +1,4 @@
-function os_setup_git()
+function _os_setup_topic_git()
 {
   git config --global alias.co checkout
   git config --global alias.br branch
@@ -8,7 +8,7 @@ function os_setup_git()
   git config --global user.email urushiraa@gmail.com
 }
 
-function os_setup_yay()
+function _os_setup_topic_yay()
 {
   wget "https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
   tar xvzf yay.tar.gz
@@ -21,15 +21,41 @@ function os_setup_yay()
   rm -fr yay*
 }
 
-function os_setup_xfce()
+function _os_setup_topic_xfce()
 {
-  yay -S arc-gtk-theme paper-icon-theme-git
+  yay -S arc-gtk-theme paper-icon-theme-git nord-xfce-terminal tempus-themes-xfce4-terminal-git xfce4-terminal-base16-colors-git
 }
 
-function os_setup_qtc()
+function _os_setup_topic_qtc()
 {
   yay -S qtcreator qt5ct
   mkdir -p ${HOME}/.config
   cd ${HOME}/.config/
   tar xvzf ${HOME}/.bashrc.d/res/os_setup_qtc.tar.gz
+}
+
+_os_setup()
+{
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="$(declare -F | awk '{print $3}' | grep '^_os_setup_topic_' | cut -f 5- -d '_')"
+
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+}
+
+complete -F _os_setup os_setup
+
+function os_setup()
+{
+  local topics=($(declare -F | awk '{print $3}' | grep '^_os_setup_topic_' | cut -f 5- -d '_'))
+
+  if [[ "${1}" == "" ]]; then
+    echo 'usage os_setup <topic>'
+    echo " tun the setup for an available topic: ${topics[@]}"
+    return 1
+  fi
+
+  _os_setup_topic_${1}
 }
