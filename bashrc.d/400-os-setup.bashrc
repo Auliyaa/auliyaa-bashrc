@@ -14,6 +14,7 @@ function _os_setup_topic_git()
   echo 'install.debug'
   echo 'install.release'
   echo '*.creator'
+  echo '*.creator.user'
   echo '*.files'
   echo '*.config'
   echo '*.cflags'
