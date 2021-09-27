@@ -14,6 +14,17 @@ function _os_tips_topic_pwmconfig()
   echo 'source: https://askubuntu.com/questions/1145968/how-to-see-all-my-fans-in-sensors'
 }
 
+function _os_tips_topic_xps13()
+{
+  echo '== howdy =='
+  echo 'install the howdy package from AUR'
+  echo 'for howdy to work with infrared camera, edit /lib/security/howdy/config.ini and set device_path = /dev/video2 (/dev/video2 points to the infrared camera)'
+  echo 'ensure the following are set to avoid storing snapshots locally:'
+  echo '[snapshots]'
+  echo 'capture_failed = false'
+  echo 'capture_successful = false'
+}
+
 _os_tips()
 {
     COMPREPLY=()
