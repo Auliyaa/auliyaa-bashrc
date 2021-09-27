@@ -34,6 +34,13 @@ function _os_setup_topic_qtc()
   tar xvzf ${HOME}/.bashrc.d/res/os_setup_qtc.tar.gz
 }
 
+function _os_setup_topic_laserweb()
+{
+  wget https://github.com/LaserWeb/LaserWeb4-Binaries/releases/download/untagged-4818330b6baa8213d4a7/laserweb-builder-v4.0.996-130-x86_64.AppImage
+  sudo mv laserweb-builder-v4.0.996-130-x86_64.AppImage /opt/laserweb4
+  sudo chmod a+x /opt/laserweb4
+}
+
 _os_setup()
 {
     COMPREPLY=()
