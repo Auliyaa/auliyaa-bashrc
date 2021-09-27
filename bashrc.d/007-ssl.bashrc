@@ -19,7 +19,7 @@ _deckey()
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="$(ls ~/keys)"
+    opts="$(ls ${HOME}/.bashrc.d/keys)"
 
     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     return 0
@@ -30,11 +30,11 @@ complete -F _deckey pkey
 
 function deckey()
 {
-  cat "${HOME}/keys/${1}" | decrypt | xclip -selection c
+  cat "${HOME}/.bashrc.d/keys/${1}" | decrypt | xclip -selection c
   echo "copied to clipboard"
 }
 
 function pkey()
 {
-  cat "${HOME}/keys/${1}" | decrypt
+  cat "${HOME}/.bashrc.d/keys/${1}" | decrypt
 }
