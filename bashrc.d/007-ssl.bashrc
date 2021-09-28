@@ -13,28 +13,48 @@ function decrypt()
 #===================================
 # decrypt a key from the ~/keys folder
 #===================================
-_deckey()
+_key_comp()
 {
     local cur prev opts
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="$(ls ${HOME}/.bashrc.d/keys)"
+    opts="$(find ${HOME}/.bashrc.d/keys/ -type f | cut -f 6- -d '/')"
 
     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     return 0
 }
 
-complete -F _deckey deckey
-complete -F _deckey pkey
+complete -F _key_comp key_print
+complete -F _key_comp key_copy
+complete -F _key_comp key_update
+complete -F _key_comp key_rm
 
-function deckey()
+function key_print()
 {
-  cat "${HOME}/.bashrc.d/keys/${1}" | decrypt | xclip -selection c
+  cat "${HOME}/.bashrc.d/keys/${1}" | decrypt
+}
+
+function key_copy()
+{
+  key_print "${1}" | xclip -selection c
   echo "copied to clipboard"
 }
 
-function pkey()
+function key_update()
 {
-  cat "${HOME}/.bashrc.d/keys/${1}" | decrypt
+  local kpath="${HOME}/.bashrc.d/keys/${1}"
+  local kval="${2}"
+  mkdir -p "$(dirname "${kpath}")"
+  echo "${kval}" | encrypt > ${kpath}
+}
+
+function key_rm()
+{
+  rm -f "${HOME}/.bashrc.d/keys/${1}"
+}
+
+function key_ls()
+{
+  find ${HOME}/.bashrc.d/keys/ -type f | cut -f 6- -d '/'
 }
