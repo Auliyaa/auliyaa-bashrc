@@ -29,7 +29,7 @@ function dev_ls()
 {
   for f in ${DEV_ROOT}/*; do
     [ -d "${f}/.git" ] || continue;
-    echo -n "$(basename "${f}")"
+    echo -n "$(basename "${f}") "
   done
   echo
 }
