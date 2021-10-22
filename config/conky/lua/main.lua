@@ -1,6 +1,7 @@
 require 'cairo'
 json = require ('dkjson')
 require('lfs')
+require('math')
 
 -- =====================================
 -- configuration variables
@@ -23,8 +24,7 @@ owm_query='Toulouse,FR'
 
 -- current loop index for weather data fetching
 owm_loop_idx=0
--- owm_fetch_frequency=300
-owm_fetch_frequency=5
+owm_fetch_frequency=300
 
 -- owm icons
 owm_icons_font="Font Awesome 5 Pro Light"
@@ -204,7 +204,6 @@ function draw_weather(cr)
     local degree_text = string.format('%s°C',math.floor(main.temp),math.floor(main.feels_like))
     local sub_text1 = string.format('%s,%s',owm_decode_obj.name,owm_decode_obj.sys.country)
     local sub_text2 = string.format('%s%% hum.',main.humidity)
-    print(sub_text2)
 
     -- draw icon
     text_set_font(cr, owm_icons_font, 40)
@@ -232,6 +231,44 @@ function draw_weather(cr)
 end
 
 -- =====================================
+-- draw bar
+-- =====================================
+function draw_bar(cr, bx, by, bw, bh, bval, bmax)
+
+  cairo_set_operator(cr, CAIRO_OPERATOR_OVER)
+
+
+
+  -- local r1,g1,b1 = hex2rgb(color_1)
+  -- cairo_set_line_width (cr, 1.0);
+  -- cairo_move_to(cr, bx, by)
+  -- cairo_rel_line_to(cr, bw, 0)
+  -- cairo_rel_line_to(cr, 0, bh)
+  -- cairo_rel_line_to(cr, -bw, 0)
+  -- cairo_close_path(cr)
+  --
+  -- cairo_stroke(cr)
+end
+
+-- =====================================
+-- CPU temps
+-- =====================================
+function draw_cpu_temps(cr)
+  yy=yy+10
+
+  -- title
+  text_set_font(cr, font, 20, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD)
+  local text="CPU temps"
+  local tw,th=text_dimensions(cr,text)
+
+  cairo_set_source_rgba(cr, r1, g1, b1, 1)
+  text_draw(cr, text, (w/2.) - (tw/2.), yy+th, color_1, 1)
+
+  yy=yy+th+5
+  draw_bar(cr, 30, yy, w-60, 20, 50, 100)
+end
+
+-- =====================================
 -- conky entrypoint
 -- =====================================
 function conky_start_widgets()
@@ -248,6 +285,7 @@ function conky_start_widgets()
 		draw_bg(cr)
     draw_weather(cr)
 		draw_clock(cr)
+    draw_cpu_temps(cr)
 
 		-- CPU temp
 		-- CPU frequency

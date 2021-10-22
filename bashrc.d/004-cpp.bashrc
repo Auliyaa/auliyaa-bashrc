@@ -23,6 +23,11 @@ function cmake_release()
   __cmake Release $@
 }
 
+function cmake_relwithdeb()
+{
+  __cmake RelWithDebInfo $@
+}
+
 function make()
 {
   echo /usr/bin/make -j$(($(nproc) -2)) $@
